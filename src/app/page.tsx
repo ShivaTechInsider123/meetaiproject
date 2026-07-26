@@ -1,75 +1,97 @@
-"use client"
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+"use client";
+
 import { useState } from "react";
-import { authClient } from "@/lib/auth-client"; //import the auth client
+
+import { authClient } from "@/lib/auth-client";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
+  const { data: session } = authClient.useSession()
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
-
-
-  const { data: session, } = authClient.useSession()
-
-
-
-
-  const handleSubmit = async () => {
+  const onSubmit = () => {
     authClient.signUp.email({
+      email,
       name,
+      password,
+    }, {
+      onError: () => {
+        window.alert("Something went wrong");
+      },
+      onSuccess: () => {
+        window.alert("Success")
+      }
+    });
+  }
+
+  const onLogin = () => {
+    authClient.signIn.email({
       email,
       password,
     }, {
+      onError: () => {
+        window.alert("Something went wrong");
+      },
       onSuccess: () => {
         window.alert("Success")
-      },
-      onError: () => {
-        window.alert("something error occured")
-      },
+      }
     });
   }
 
   if (session) {
     return (
-      <>
-        <div>
-          <p>
-            Logged in as {session.user.name}
-          </p>
-          <Button onClick={() => { authClient.signOut() }}>Sign out</Button>
-        </div>
-      </>
-    )
+      <div className="flex flex-col p-4 gap-y-4">
+        <p>Logged in as {session.user.name}</p>
+        <Button onClick={() => authClient.signOut()}>
+          Sign out
+        </Button>
+      </div>
+    );
   }
 
-  const onhandleLogin = () => {
-    authClient.signIn.email({
-      email,
-      password
-    }, {
-      onSuccess: () => {
-        window.alert("Login Success")
-      }, onError: () => {
-        window.alert("something went wrong")
-      }
-    })
-  }
   return (
-    <>
-
-      <input type="text" name="name" placeholder="enter name" value={name} onChange={(e) => setName(e.target.value)} />
-      <input type="text" name="email" placeholder="enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="text" name="password" placeholder="enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Button onClick={handleSubmit}>Create User</Button>
-
-
-      <input type="text" name="email" placeholder="enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="text" name="password" placeholder="enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Button onClick={onhandleLogin}>Login</Button>
-
-    </>
+    <div className="flex flex-col gap-y-10">
+      <div className="p-4 flex flex-col gap-y-4">
+        <Input
+          placeholder="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          placeholder="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button onClick={onSubmit}>
+          Create user
+        </Button>
+      </div>
+      <div className="p-4 flex flex-col gap-y-4">
+        <Input
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          placeholder="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button onClick={onLogin}>
+          Login
+        </Button>
+      </div>
+    </div>
   );
-}
+};
