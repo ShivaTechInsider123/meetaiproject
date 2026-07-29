@@ -1,4 +1,4 @@
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command";
+import { Command, CommandResponsiveDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "@/components/ui/command";
 import { Dispatch, SetStateAction } from "react";
 interface props {
     open: boolean
@@ -6,7 +6,7 @@ interface props {
 }
 export function DashboardCommand({ open, setOpen }: props) {
     return (
-        <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandResponsiveDialog open={open} onOpenChange={setOpen}>
             <CommandInput placeholder="Find a meeting or agent" />
             <CommandList>
                 <CommandItem>
@@ -15,6 +15,6 @@ export function DashboardCommand({ open, setOpen }: props) {
             </CommandList>
 
 
-        </CommandDialog>
+        </CommandResponsiveDialog>
     );
 }
