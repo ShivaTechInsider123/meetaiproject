@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 export function HomeView() {
     const trpc = useTRPC()
     const { data: session } = authClient.useSession()
-    const { data } = useQuery(trpc.hello.queryOptions({ text: "Shiva" }))
+    const { data } = useQuery(trpc.agents.getMany.queryOptions())
     const router = useRouter()
     if (!session) {
         return
@@ -16,7 +16,7 @@ export function HomeView() {
     return (
         <div className="flex flex-col gap-6">
             <h1>Welcome, {session.user?.name}</h1>
-            <h1>{data?.greeting}</h1>
+            <h1>{data?.map((a) => a.name)}</h1>
 
             <button onClick={() => authClient.signOut({
                 fetchOptions: {
