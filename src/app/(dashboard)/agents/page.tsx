@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 
 export default async function Agents() {
 
-    const session = await auth.api.getSession({
+    const session = auth.api.getSession({
         headers: await headers()
     })
     if (!session) {
