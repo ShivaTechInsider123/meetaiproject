@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 export function HomeView() {
     const trpc = useTRPC()
     const { data: session } = authClient.useSession()
-    const { data } = useQuery(trpc.agents.getMany.queryOptions())
+    const { data } = useQuery(trpc.agents.getMany.queryOptions({}))
     const router = useRouter()
     if (!session) {
         return
