@@ -18,7 +18,7 @@ interface Props {
 }
 export default async function Home({ searchParams }: Props) {
   const filters = await loadSearchParams(searchParams)
-  const session = auth.api.getSession({
+  const session = await auth.api.getSession({
     headers: await headers()
   })
 
@@ -35,7 +35,6 @@ export default async function Home({ searchParams }: Props) {
       <AgentsListHeader />
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<AgentsViewLoading />}>
-
           <ErrorBoundary fallback={<AgentsViewError />}>
             <AgentsView />
           </ErrorBoundary>
