@@ -20,7 +20,7 @@ interface Props {
 export default async function Meetings({ searchParams }: Props) {
 
     const filters = await loadSearchParams(searchParams)
-    const session = auth.api.getSession({
+    const session = await auth.api.getSession({
         headers: await headers()
     })
     if (!session) {
