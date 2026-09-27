@@ -139,7 +139,6 @@ export function MeetingsForm({
                                             children: (
                                                 <div className="flex items-center gap-x-2">
                                                     <GeneratedAvatar
-
                                                         seed={agent.name}
                                                         variant="bottsNeutral"
                                                         className="border size-6"
