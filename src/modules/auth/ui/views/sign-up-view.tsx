@@ -232,4 +232,6 @@ export function SignUpView() {
             </div>
         </div>
     );
-}   
+}
+
+
