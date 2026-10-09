@@ -42,7 +42,6 @@ const secondSection = [
 
 ]
 
-
 export function DashboardSidebar() {
     const pathname = usePathname()
     return (
