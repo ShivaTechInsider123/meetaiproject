@@ -7,7 +7,6 @@ import { AgentIdViewHeader } from "../components/agent-id-view-header"
 import { GeneratedAvatar } from "@/components/generated-avatar"
 import { Badge } from "@/components/ui/badge"
 import { VideoIcon } from "lucide-react"
-import { da } from "date-fns/locale"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useConfirm } from "@/hooks/use-confirm"
@@ -29,6 +28,9 @@ export function AgentIdView({ agentId }: Props) {
         trpc.agents.remove.mutationOptions({
             onSuccess: async () => {
                 await queryClient.invalidateQueries(trpc.agents.getMany.queryOptions({}))
+                await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions()
+                );
                 router.push("/agents")
             },
             onError: (error) => {
@@ -73,7 +75,7 @@ export function AgentIdView({ agentId }: Props) {
                             <GeneratedAvatar
                                 seed={data.name}
                                 className="size-10"
-                                variant="bottsNeutral" />
+                                variant="botttsNeutral" />
                             <h2 className="text-2xl font-medium">{data.name}</h2>
                         </div>
                         <Badge variant="outline" className="flex items-center gap-x-2 [&svg]:size-4">

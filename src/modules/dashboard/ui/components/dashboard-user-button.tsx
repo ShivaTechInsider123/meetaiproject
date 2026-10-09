@@ -2,10 +2,9 @@
 import { GeneratedAvatar } from "@/components/generated-avatar"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
+import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { auth } from "@/lib/auth"
 import { authClient } from "@/lib/auth-client"
 import { ChevronDownIcon, CreditCardIcon, LogOutIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -65,7 +64,7 @@ export function DashboardUserButton() {
                         <DrawerDescription>{data.user.email}</DrawerDescription>
                     </DrawerHeader>
                     <DrawerFooter>
-                        <Button onClick={() => { }} variant="outline">
+                        <Button onClick={() => { authClient.customer.portal() }} variant="outline">
                             <CreditCardIcon className="size-4 text-black" />
                             <span className="text-black">Billing</span>
                         </Button>
@@ -116,7 +115,9 @@ export function DashboardUserButton() {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer flex items-center justify-between">
+                <DropdownMenuItem
+                    onClick={() => authClient.customer.portal()}
+                    className="cursor-pointer flex items-center justify-between">
                     Billing
                     <CreditCardIcon className="size-4" />
                 </DropdownMenuItem>

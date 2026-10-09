@@ -4,7 +4,7 @@ import humanizeDuration from "humanize-duration";
 import { ColumnDef } from "@tanstack/react-table"
 import { MeetingsMany } from "../../types"
 import { GeneratedAvatar } from "@/components/generated-avatar"
-import { CircleCheckIcon, CircleXIcon, ClockArrowUpIcon, ClockFadingIcon, CornerDownRightIcon, LoaderIcon, VideoIcon } from "lucide-react"
+import { CircleCheckIcon, CircleXIcon, ClockArrowUpIcon, ClockFadingIcon, CornerDownRightIcon, LoaderIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -52,8 +52,8 @@ export const columns: ColumnDef<MeetingsMany[number]>[] = [
                         <span className="text-sm text-muted-foreground max-width-[200px] truncate capitalize">{row.original.agent.name}</span>
                     </div>
                     <GeneratedAvatar
-                        variant="bottsNeutral"
                         seed={row.original.agent.name}
+                        variant="botttsNeutral"
                         className="size-4"
                     />
                     <span className="text-small text-muted-foreground">

@@ -27,6 +27,8 @@ export const CommandSelect = ({
     isSearchable,
     className
 }: Props) => {
+    console.log(isSearchable)
+
     const [open, setOpen] = useState(false)
     const selectedOption = options.find((option) => option.value === value)
 
