@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { authClient } from "@/lib/auth-client"
 import { generatedAvatarUri } from "@/lib/avatar"
-import { StreamVideoClient } from "@stream-io/node-sdk"
 import { DefaultVideoPlaceholder, StreamVideoParticipant, ToggleAudioPreviewButton, ToggleVideoPreviewButton, useCallStateHooks, VideoPreview } from "@stream-io/video-react-sdk"
 import { LogInIcon } from "lucide-react"
 import Link from "next/link"
@@ -25,7 +24,6 @@ export function CallLobby({ onJoin }: props) {
 
         return (
             <DefaultVideoPlaceholder
-
                 participant={
                     {
                         name: data?.user.name ?? "",

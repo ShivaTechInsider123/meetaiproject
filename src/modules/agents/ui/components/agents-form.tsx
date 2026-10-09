@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface AgentsformProps {
     onSuccess?: () => void,
@@ -33,18 +34,25 @@ export function AgentForm({
 }: AgentsformProps) {
     const trpc = useTRPC()
     const queryClient = useQueryClient()
+    const router = useRouter()
 
     const createAgent = useMutation(
         trpc.agents.create.mutationOptions({
-            onSuccess: () => {
-                queryClient.invalidateQueries(
+            onSuccess: async () => {
+                await queryClient.invalidateQueries(
                     trpc.agents.getMany.queryOptions({})
-                )
+                );
+                await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions()
+                );
 
                 onSuccess?.()
             },
             onError: (error) => {
                 toast.error(error.message)
+                if (error?.data?.code === "FORBIDDEN") {
+                    router.push("/upgrade")
+                }
             }
 
         })
@@ -97,7 +105,7 @@ export function AgentForm({
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <GeneratedAvatar
                     seed={form.watch("name")}
-                    variant="bottsNeutral"
+                    variant="botttsNeutral"
                     className="border size-16"
                 />
                 <FormField

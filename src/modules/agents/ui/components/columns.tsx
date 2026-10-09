@@ -1,7 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { AgentGetMany, AgentOne } from "../../types"
+import { AgentGetMany } from "../../types"
 import { GeneratedAvatar } from "@/components/generated-avatar"
 import { CornerDownRightIcon, VideoIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -18,7 +18,7 @@ export const columns: ColumnDef<AgentGetMany[number]>[] = [
             <div className="flex flex-col gap-y-1">
                 <div className="flex items-center gap-x-2">
                     <GeneratedAvatar
-                        variant="bottsNeutral"
+                        variant="botttsNeutral"
                         seed={row.original.name}
                         className="size-6"
 

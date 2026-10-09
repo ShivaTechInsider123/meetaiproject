@@ -37,7 +37,7 @@ export function MeetingsForm({
     const queryClient = useQueryClient()
 
 
-    const [open, setOpen] = useState(false)
+    // const [open, setOpen] = useState(false)
     const [openNewAgentDialog, setOpenNewAgentDialog] = useState(false);
     const [agentSearch, setAgentSearch] = useState("")
 
@@ -48,10 +48,13 @@ export function MeetingsForm({
 
     const createMeeting = useMutation(
         trpc.meetings.create.mutationOptions({
-            onSuccess: (data) => {
-                queryClient.invalidateQueries(
+            onSuccess: async (data) => {
+                await queryClient.invalidateQueries(
                     trpc.meetings.getMany.queryOptions({})
                 )
+                await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions()
+                );
 
                 onSuccess?.(data.id)
             },
@@ -140,7 +143,7 @@ export function MeetingsForm({
                                                 <div className="flex items-center gap-x-2">
                                                     <GeneratedAvatar
                                                         seed={agent.name}
-                                                        variant="bottsNeutral"
+                                                        variant="botttsNeutral"
                                                         className="border size-6"
                                                     />
                                                     <span>{agent.name}</span>

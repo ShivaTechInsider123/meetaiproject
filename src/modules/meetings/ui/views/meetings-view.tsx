@@ -4,12 +4,11 @@ import { DataTable } from "@/components/data-table"
 import { ErrorState } from "@/components/error-state"
 import { LoadingState } from "@/components/loading-state"
 import { useTRPC } from "@/trpc/client"
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query"
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { columns } from "../components/columns"
 import { EmptyState } from "@/components/empty-state"
 import { useMeetingsFilters } from "../../hooks/use-agents-filters"
 import { DataPagination } from "@/modules/agents/ui/components/data-pagination"
-import { Router } from "next/router"
 import { useRouter } from "next/navigation"
 
 export function MeetingsView() {
@@ -43,6 +42,7 @@ export function MeetingsViewLoading() {
         <LoadingState title="Loading meetings" description="Please wait while we load the meetings..." />
     )
 }
+
 
 export function MeetingsViewError() {
     return (

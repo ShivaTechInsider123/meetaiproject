@@ -6,13 +6,13 @@ import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-q
 import { MeetingIdViewHeader } from "../components/meeting-id-view-header"
 import { useRouter } from "next/navigation"
 import { useConfirm } from "@/hooks/use-confirm"
-import { UpdateAgentDialog } from "@/modules/agents/ui/components/update-agent-dialog"
 import { UpdateMeetingDialog } from "../components/update-meeting-dialog"
 import { useState } from "react"
 import { UpcomingState } from "../components/upcoming-state"
 import { ActiveState } from "../components/active-state"
 import { CancelledState } from "../components/cancelled-state"
 import { ProcessingState } from "../components/processing-state"
+import { CompletedState } from "../components/completed-state"
 
 interface Props {
     meetingId: string
@@ -31,8 +31,11 @@ export function MeetingIdView({ meetingId }: Props) {
 
     const removeMeetings = useMutation(
         trpc.meetings.remove.mutationOptions({
-            onSuccess: () => {
-                queryClient.invalidateQueries(trpc.meetings.getMany.queryOptions({}))
+            onSuccess: async () => {
+                await queryClient.invalidateQueries(trpc.meetings.getMany.queryOptions({}))
+                await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions()
+                );
                 router.push("/meetings")
             },
             onError: () => { }
@@ -74,11 +77,9 @@ export function MeetingIdView({ meetingId }: Props) {
                 {isActive && <ActiveState meetingId={meetingId} />}
                 {isUpcoming && <UpcomingState
                     meetingId={meetingId}
-                    onCancelMeeting={() => { }}
-                    isCancelling={false}
 
                 />}
-                {isCompleted && <div>Completed</div>}
+                {isCompleted && <CompletedState data={data} />}
                 {isProcessing && <ProcessingState />}
             </div>
         </>

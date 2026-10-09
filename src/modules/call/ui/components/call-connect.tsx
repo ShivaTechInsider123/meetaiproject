@@ -26,7 +26,7 @@ export function CallConnect({ meetingId, meetingName, userId, userName, userImag
     )
 
     useEffect(() => {
-        const _client = new StreamVideoClient({
+        const _client = StreamVideoClient.getOrCreateInstance({
             apiKey: process.env.NEXT_PUBLIC_STREAM_API_KEY!,
             user: {
                 id: userId,
@@ -40,10 +40,10 @@ export function CallConnect({ meetingId, meetingName, userId, userName, userImag
         setClient(_client)
 
         return () => {
-            _client.disconnectUser()
+            // _client.disconnectUser()
             setClient(undefined)
         }
-    }, [generateToken, userId, userName, userImage])
+    }, [userId, userName, userImage])
 
 
     const [call, setCall] = useState<Call>();
@@ -87,3 +87,4 @@ export function CallConnect({ meetingId, meetingName, userId, userName, userImag
         </StreamVideo>
     )
 }
+
